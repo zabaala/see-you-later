@@ -5,7 +5,7 @@ import './index.sass';
 
 class NewLink extends Component {
     state = {
-        isOpen: true
+        isOpen: false
     };
 
     show = (show) => {
