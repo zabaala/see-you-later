@@ -8,6 +8,19 @@ class CardsList extends Component {
         data: {}
     };
 
+    onDeleteHandler = (key, event) => {
+
+        const ok = window.confirm('Deseja realmente remover este item? Esta ação é irreversível.');
+
+        if (! ok) {
+            return;
+        }
+
+        DatabaseService
+            .remove(key, 'links')
+            .then(response => console.log('[Firebase::remove]', response));
+    };
+
     componentDidMount = () => {
         DatabaseService.getDataList(
             'links',
@@ -15,12 +28,14 @@ class CardsList extends Component {
                 const _cards = [];
 
                 Object.keys(this.state.data).forEach((el, i) => {
-                    _cards.push(<Card data={this.state.data[el]} />);
+                    _cards.push(<Card data={this.state.data[el]} onDelete={this.onDeleteHandler} />);
                 });
 
                 this.setState({cards: _cards});
             }));
     };
+
+
 
     render = () => {
         return (

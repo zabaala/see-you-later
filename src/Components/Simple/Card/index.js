@@ -2,7 +2,14 @@ import React from 'react';
 import './index.sass';
 import moment from 'moment';
 
-const Card = ({data = {}}) => {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faTrashAlt);
+
+
+const Card = ({data = {}, onDelete = () => {}}) => {
     const {
         key = '',
         title = '',
@@ -10,8 +17,13 @@ const Card = ({data = {}}) => {
         link = '',
         image = '',
         createdAt = '',
-        seeAt = '',
+        seeAt = ''
     } = data;
+
+    const onDeleteHandler = (e) => {
+        e.preventDefault();
+        onDelete(key, e);
+    };
 
     return (
         // object && card
@@ -22,6 +34,11 @@ const Card = ({data = {}}) => {
                 </div>
                 <div className="card-body">
                     <div className="see-at">
+                        <div className="card-action-bar">
+                            <a href={key} onClick={onDeleteHandler}>
+                                <FontAwesomeIcon icon="trash-alt" />
+                            </a>
+                        </div>
                         <small>acessar em</small>
                         <br/>
                         {moment(seeAt, 'X').format('DD MMMM YYYY HH:mm')}
