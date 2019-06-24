@@ -34,6 +34,7 @@ const Card = ({data = {}, onDelete = () => {}}) => {
                 </div>
                 <div className="card-body">
                     <div className="see-at">
+                        {/*<img src="https://cursos.alura.com.br/forum/favicon.ico" alt=""/>*/}
                         <div className="card-action-bar">
                             <a href={key} onClick={onDeleteHandler}>
                                 <FontAwesomeIcon icon="trash-alt" />

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Card from "../../Simple/Card";
 import DatabaseService from "../../../support/database/DatabaseService";
+import { getMetadata } from 'page-metadata-parser';
+import domino from 'domino';
 
 class CardsList extends Component {
     state = {

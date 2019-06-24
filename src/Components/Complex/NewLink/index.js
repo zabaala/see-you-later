@@ -5,10 +5,11 @@ import NewLinkButton from "../../Simple/NewLinkButton";
 import './index.sass';
 import DatabaseService from "../../../support/database/DatabaseService";
 import Alert from "../../Simple/Alert";
+import Metadata from "../../../support/FetchMetadata";
 
 class NewLink extends Component {
     state = {
-        isOpen: false,
+        isOpen: true,
         creating: false,
         hasError: false,
         errorMessage: "",
@@ -97,6 +98,26 @@ class NewLink extends Component {
         }
     });
 
+    onBlurHandler = e => {
+        const expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+        const regex = new RegExp(expression);
+
+        if (! e.target.value.match(regex)) {
+            // invalid url...
+            return;
+        }
+
+        Metadata.fetch(e.target.value, (metadata) => {
+            this.setState({
+                formData: {
+                    ...this.state.formData,
+                    image: metadata.image,
+                    icon: metadata.icon
+                }
+            })
+        });
+    };
+
     render = () => {
         return (
             <React.Fragment>
@@ -115,7 +136,8 @@ class NewLink extends Component {
                             className="form-item"
                             placeholder="Qual o link?"
                             // required={true}
-                            onKeyUp={this.onKeyPressHandler}
+                            onChange={this.onKeyPressHandler}
+                            onBlur={this.onBlurHandler}
                         />
 
                         <input
@@ -124,7 +146,7 @@ class NewLink extends Component {
                             className="form-item"
                             placeholder="Informe o título"
                             // required={true}
-                            onKeyUp={this.onKeyPressHandler}
+                            onChange={this.onKeyPressHandler}
                         />
 
                         <textarea
@@ -132,7 +154,7 @@ class NewLink extends Component {
                             className="form-item"
                             placeholder="Gostaria de adicionar uma descrição?"
                             rows="2"
-                            onKeyUp={this.onKeyPressHandler}
+                            onChange={this.onKeyPressHandler}
                         />
 
                         <input
@@ -141,7 +163,7 @@ class NewLink extends Component {
                             className="form-item"
                             placeholder="Ver quando?"
                             // required={true}
-                            onKeyUp={this.onKeyPressHandler}
+                            onChange={this.onKeyPressHandler}
                         />
 
                         <button
