@@ -9,19 +9,6 @@ class CardsList extends Component {
     };
 
     componentDidMount = () => {
-
-
-        // const newId = DatabaseService.pushData("links", {
-        //     title: "Link de teste",
-        //     description: "uma descricao qualquer",
-        //     link: "https://images.google.com",
-        //     image: "https://abrilveja.files.wordpress.com/2019/05/brasil-damares-alves-20190221-022-copy.png",
-        //     createAt: new Date().toDateString(),
-        //     seeAt: new Date().toDateString()
-        // });
-
-        // console.log('[FIREBASE] item created with id: ', newId);
-
         DatabaseService.getDataList(
             'links',
             (receivedData) => this.setState({data: receivedData}, () => {
@@ -33,10 +20,6 @@ class CardsList extends Component {
 
                 this.setState({cards: _cards});
             }));
-
-        // [...7].forEach((el, i) => );
-
-
     };
 
     render = () => {
