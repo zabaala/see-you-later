@@ -8,7 +8,7 @@ import Alert from "../../Simple/Alert";
 
 class NewLink extends Component {
     state = {
-        isOpen: true,
+        isOpen: false,
         creating: false,
         hasError: false,
         errorMessage: "",

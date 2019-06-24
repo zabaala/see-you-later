@@ -1,4 +1,5 @@
 import { firebaseDatabase } from "./firebaseConfig";
+import moment from 'moment';
 
 export default class DatabaseService {
 
@@ -9,8 +10,12 @@ export default class DatabaseService {
      * @param callback
      * @param size
      */
-    static getDataList = (nodePath, callback, size = 10) => {
-        let query = firebaseDatabase.ref(nodePath).limitToLast(size);
+    static getDataList = (nodePath, callback, size = 100) => {
+        let query = firebaseDatabase
+            .ref(nodePath)
+            .orderByChild('seeAt')
+            .endAt(moment().unix())
+            .limitToLast(size);
 
         query.on('value', dataSnapshot => {
             let items = [];
@@ -18,7 +23,7 @@ export default class DatabaseService {
             dataSnapshot.forEach(child => {
                 let item = child.val();
                 item['key'] = child.key;
-                items.push(item);
+                items.unshift(item);
             });
 
             callback(items);
