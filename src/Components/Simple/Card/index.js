@@ -16,6 +16,7 @@ const Card = ({data = {}, onDelete = () => {}}) => {
         description = '',
         link = '',
         image = '',
+        icon = '',
         createdAt = '',
         seeAt = ''
     } = data;
@@ -33,8 +34,12 @@ const Card = ({data = {}, onDelete = () => {}}) => {
                     { image && <img src={image} alt={title} /> }
                 </div>
                 <div className="card-body">
+
+                    <div className="card-icon">
+                        <img src={icon} alt="website ico"/>
+                    </div>
+
                     <div className="see-at">
-                        {/*<img src="https://cursos.alura.com.br/forum/favicon.ico" alt=""/>*/}
                         <div className="card-action-bar">
                             <a href={key} onClick={onDeleteHandler}>
                                 <FontAwesomeIcon icon="trash-alt" />

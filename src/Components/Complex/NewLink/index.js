@@ -9,7 +9,7 @@ import Metadata from "../../../support/FetchMetadata";
 
 class NewLink extends Component {
     state = {
-        isOpen: true,
+        isOpen: false,
         creating: false,
         hasError: false,
         errorMessage: "",
@@ -108,12 +108,15 @@ class NewLink extends Component {
         }
 
         Metadata.fetch(e.target.value, (metadata) => {
+            const data = this.state.formData;
+
+            data.icon = metadata.icon || null;
+            data.image = metadata.image || null;
+
+            console.log(metadata, data);
+
             this.setState({
-                formData: {
-                    ...this.state.formData,
-                    image: metadata.image,
-                    icon: metadata.icon
-                }
+                formData: data
             })
         });
     };
